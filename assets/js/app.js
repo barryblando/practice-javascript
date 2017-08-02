@@ -11,7 +11,7 @@ GAME RULES:
 
  var scores = [0,0], // Which stores the scores for both the players
      roundScore = 0,
-     activePlayer = 0; /* stores the active player, Player 1 = 0 & Player 2 = 1 
+    activePlayer = 0; /* stores the active player, Player 1 = 0 & Player 2 = 1 
         we can use activePlayer to access, to read, or to write, in this case the scores
         right into the scores array.
      */
@@ -72,37 +72,56 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     document.querySelector('#current-' + activePlayer).textContent = roundScore; 
   } else {
     // Next Player
-    // We'll use ternary operator 
-    activePlayer = (activePlayer === 0 ? 1 : 0);
-    //when player gets roll dice 1 he/she loses his/her score, so it should be set to zero
-    roundScore = 0;
-    //Also set zero in the User interface
-    document.getElementById('current-0').textContent = '0';
-    document.getElementById('current-1').textContent = '0';
-
-    //so in HTML player-0-panel is currently have class active so will use toggle 
-    //what toggle does is to add the class, if it's not there, and if it's there, to remove.
-    document.querySelector('.player-0-panel').classList.toggle('active');
-    document.querySelector('.player-1-panel').classList.toggle('active'); 
-
-    //document.querySelector('.player-0-panel').classList.remove('active');
-    //document.querySelector('.player-1-panel').classList.add('active'); 
-
-    document.querySelector('.dice').style.display = 'none';
+    nextPlayer();
   }
 });
 
 //Hold
 document.querySelector('.btn-hold').addEventListener('click', function() {
   // Add CURRENT score to GLOBAL score
+  scores[activePlayer] += roundScore;
 
   // Update the UI
-
+  document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
   // Check if player won the game
+  if(scores[activePlayer] >= 20) {
+    document.getElementById('name-' + activePlayer).textContent = 'WINNER!';
+    document.querySelector('.dice').style.display = 'none';
+    document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+    document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+  } else { 
+    // Next Player
+    nextPlayer();
+  }
 });
 
+//using DRY principle Don't repeat yourself we'll use this in our roll & hold events
+function nextPlayer() {
+  // We'll use ternary operator
+  activePlayer = (activePlayer === 0 ? 1 : 0);
+  /*
+    if(activePlayer === 0) {
+      activePlayer = 1;
+    } else {
+      activePlayer = 0;
+    }
+  */
+  //when player gets roll dice 1 he/she loses his/her score, so it should be set to zero
+  roundScore = 0;
+  //Also set zero in the User interface
+  document.getElementById('current-0').textContent = '0';
+  document.getElementById('current-1').textContent = '0';
 
+  //so in HTML player-0-panel is currently have class active so will use toggle 
+  //what toggle does is to add the class, if it's not there, and if it's there, to remove.
+  document.querySelector('.player-0-panel').classList.toggle('active');
+  document.querySelector('.player-1-panel').classList.toggle('active'); 
 
+  //document.querySelector('.player-0-panel').classList.remove('active');
+  //document.querySelector('.player-1-panel').classList.add('active'); 
+
+  document.querySelector('.dice').style.display = 'none';
+}
 
 
 
