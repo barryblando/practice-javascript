@@ -38,12 +38,16 @@
 */
 
 //functions
+
+//function declration
 calculateAge(1965);
 
 function calculateAge(year) {
     return 2016 - year;
 }
 
+
+//function expression
 //retirement(1956);
 
 var retirement = function(year) {

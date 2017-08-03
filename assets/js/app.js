@@ -9,43 +9,14 @@ GAME RULES:
 
 */
 
- var scores = [0,0], // Which stores the scores for both the players
-     roundScore = 0,
-    activePlayer = 0; /* stores the active player, Player 1 = 0 & Player 2 = 1 
-        we can use activePlayer to access, to read, or to write, in this case the scores
-        right into the scores array.
-     */
-    
-/* 
+var scores, roundScore, activePlayer;
 
-  lets get id score-0 for player 1, use querySelector method to manipulate, to change values and elements
-  and use textContent method for changing its value and it can only set plain text, so no HTML. 
-  but if we want to put some html code we'll use innerHTML. We can also use querySelector to actually
-  only read elements from a webpage and store into some variable.
-
-*/
-
-//Setter - for changing/setting the value
-//document.querySelector('#current-' + activePlayer).textContent = dice; 
-
-//document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
-
-//Getter - for reading/getting the value
-//var x = document.querySelector('#score-0').textContent;
-
-//to change some CSS on a element.. style property : property value; > (display : none;)
-document.querySelector('.dice').style.display = 'none';
-
-//so let's use getElementById for ID selector which is faster than querySelector so no more hashtag
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
+init();
 
 /*
   'cause this is only for user, we can't use callback function, Callback function means we let a function to call a function
   Example: 
-    function btn {
+    function btn() {
       //Do Something
     }
     document.querySelector('.btn-roll').addEventListener('click', btn); 
@@ -79,16 +50,17 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 //Hold
 document.querySelector('.btn-hold').addEventListener('click', function() {
   // Add CURRENT score to GLOBAL score
-  scores[activePlayer] += roundScore;
-
+  scores[activePlayer] +=  roundScore;
   // Update the UI
   document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
   // Check if player won the game
   if(scores[activePlayer] >= 20) {
-    document.getElementById('name-' + activePlayer).textContent = 'WINNER!';
+    document.getElementById('name-' + activePlayer).textContent = 'Winner!';
     document.querySelector('.dice').style.display = 'none';
     document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
     document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+    document.querySelector('.btn-hold').style.display = 'none';
+    document.querySelector('.btn-roll').style.display = 'none';
   } else { 
     // Next Player
     nextPlayer();
@@ -99,16 +71,11 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 function nextPlayer() {
   // We'll use ternary operator
   activePlayer = (activePlayer === 0 ? 1 : 0);
-  /*
-    if(activePlayer === 0) {
-      activePlayer = 1;
-    } else {
-      activePlayer = 0;
-    }
-  */
+  /* if(activePlayer === 0) { activePlayer = 1; } else { activePlayer = 0; } */
+
   //when player gets roll dice 1 he/she loses his/her score, so it should be set to zero
   roundScore = 0;
-  //Also set zero in the User interface
+  //Also set zero in the UI
   document.getElementById('current-0').textContent = '0';
   document.getElementById('current-1').textContent = '0';
 
@@ -123,9 +90,51 @@ function nextPlayer() {
   document.querySelector('.dice').style.display = 'none';
 }
 
+document.querySelector('.btn-new').addEventListener('click', init);
 
+// let's create init function to initialize variables from the beginning and reuse it 
 
+function init() {
+  scores = [0,0]; // Which stores the scores for both the players
+  roundScore = 0;
+  activePlayer = 0; /* stores the active player, Player 1 = 0 & Player 2 = 1 
+        we can use activePlayer to access, to read, or to write, in this case the scores
+        right into the scores array. */
+  /* 
+    lets get id score-0 for player 1, use querySelector method to manipulate, to change values and elements
+    and use textContent method for changing its value and it can only set plain text, so no HTML. 
+    but if we want to put some html code we'll use innerHTML. We can also use querySelector to actually
+    only read elements from a webpage and store into some variable.
+  */
 
+  //Setter - for changing/setting the value
+  //document.querySelector('#current-' + activePlayer).textContent = dice; 
+
+  //document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
+
+  //Getter - for reading/getting the value
+  //var x = document.querySelector('#score-0').textContent;
+
+  //to change some CSS on a element.. style property : property value; > (display : none;)
+  document.querySelector('.dice').style.display = 'none';
+
+  //so let's use getElementById for ID selector which is faster than querySelector so no more hashtag
+  document.getElementById('score-0').textContent = '0';
+  document.getElementById('score-1').textContent = '0';
+  document.getElementById('current-0').textContent = '0';
+  document.getElementById('current-1').textContent = '0';
+  document.getElementById('name-0').textContent = 'Player 1';
+  document.getElementById('name-1').textContent = 'Player 2';
+  //check if there's winner & active class that is active
+  document.querySelector('.player-0-panel').classList.remove('winner');
+  document.querySelector('.player-1-panel').classList.remove('winner');
+  document.querySelector('.player-0-panel').classList.remove('active');
+  document.querySelector('.player-1-panel').classList.remove('active');
+  //add back active class to first player
+  document.querySelector('.player-0-panel').classList.add('active');
+  document.querySelector('.btn-hold').style.display = 'block';
+  document.querySelector('.btn-roll').style.display = 'block';
+}
 
 
 
