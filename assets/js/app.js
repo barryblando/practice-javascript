@@ -12,6 +12,7 @@ GAME RULES:
 var scores, 
     roundScore, 
     activePlayer,
+    lastDice,
     gamePlaying; // lastly State variable simply tell us the condition of a system
 
 init();
@@ -36,7 +37,6 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
   if(gamePlaying) {
     // 1. Random Number
     var dice = Math.floor(Math.random() *6) + 1;
-
     // 2. Display the  result
     var diceDOM = document.querySelector('.dice');
     diceDOM.style.display = 'block';
@@ -45,7 +45,11 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     diceDOM.src = 'assets/img/dice-' + dice + '.png';
 
     // 3. Update Round Score if the rolled number was NOT a 1
-    if (dice !== 1) {
+    if(dice === 6 && lastDice === 6){
+      scores[activePlayer] = 0;
+      document.querySelector('#score-' + activePlayer).textContent = '0';
+      nextPlayer();
+    } else if (dice !== 1) {
       //Add Score to current player which is player 0
       roundScore += dice; //or roundScore = roundScore + dice
       document.querySelector('#current-' + activePlayer).textContent = roundScore; 
@@ -53,6 +57,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
       // Next Player
       nextPlayer();
     }
+    lastDice =  dice;
   }
 });
 
@@ -64,7 +69,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     // Update the UI
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
     // Check if player won the game
-    if(scores[activePlayer] >= 20) {
+    if(scores[activePlayer] >= 100) {
       document.getElementById('name-' + activePlayer).textContent = 'Winner!';
       document.querySelector('.dice').style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -105,6 +110,7 @@ document.querySelector('.btn-new').addEventListener('click', init);
 // let's create init function to initialize variables from the beginning and reuse it 
 function init() {
   scores = [0,0]; // Which stores the scores for both the players
+  lastDice = 0;
   roundScore = 0;
   activePlayer = 0; /* stores the active player, Player 1 = 0 & Player 2 = 1 
         we can use activePlayer to access, to read, or to write, in this case the scores
