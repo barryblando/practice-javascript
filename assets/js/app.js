@@ -9,7 +9,10 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer;
+var scores, 
+    roundScore, 
+    activePlayer,
+    gamePlaying; // lastly State variable simply tell us the condition of a system
 
 init();
 
@@ -26,44 +29,51 @@ init();
 
 //Roll
 document.querySelector('.btn-roll').addEventListener('click', function() {
-  // 1. Random Number
-  var dice = Math.floor(Math.random() *6) + 1;
+  /* 
+    so only this happens if the game is actually playing. after the game is finished,
+    we can push this button but nothing's going to happen anymore.
+  */
+  if(gamePlaying) {
+    // 1. Random Number
+    var dice = Math.floor(Math.random() *6) + 1;
 
-  // 2. Display the  result
-  var diceDOM = document.querySelector('.dice');
-  diceDOM.style.display = 'block';
+    // 2. Display the  result
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block';
 
-  //so let's change the img of dice rolls
-  diceDOM.src = 'assets/img/dice-' + dice + '.png';
+    //so let's change the img of dice rolls
+    diceDOM.src = 'assets/img/dice-' + dice + '.png';
 
-  // 3. Update Round Score if the rolled number was NOT a 1
-  if (dice !== 1) {
-    //Add Score to current player which is player 0
-    roundScore += dice; //or roundScore = roundScore + dice
-    document.querySelector('#current-' + activePlayer).textContent = roundScore; 
-  } else {
-    // Next Player
-    nextPlayer();
+    // 3. Update Round Score if the rolled number was NOT a 1
+    if (dice !== 1) {
+      //Add Score to current player which is player 0
+      roundScore += dice; //or roundScore = roundScore + dice
+      document.querySelector('#current-' + activePlayer).textContent = roundScore; 
+    } else {
+      // Next Player
+      nextPlayer();
+    }
   }
 });
 
 //Hold
 document.querySelector('.btn-hold').addEventListener('click', function() {
-  // Add CURRENT score to GLOBAL score
-  scores[activePlayer] +=  roundScore;
-  // Update the UI
-  document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
-  // Check if player won the game
-  if(scores[activePlayer] >= 20) {
-    document.getElementById('name-' + activePlayer).textContent = 'Winner!';
-    document.querySelector('.dice').style.display = 'none';
-    document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
-    document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
-    document.querySelector('.btn-hold').style.display = 'none';
-    document.querySelector('.btn-roll').style.display = 'none';
-  } else { 
-    // Next Player
-    nextPlayer();
+  if(gamePlaying) {
+    // Add CURRENT score to GLOBAL score
+    scores[activePlayer] +=  roundScore;
+    // Update the UI
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    // Check if player won the game
+    if(scores[activePlayer] >= 20) {
+      document.getElementById('name-' + activePlayer).textContent = 'Winner!';
+      document.querySelector('.dice').style.display = 'none';
+      document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+      document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+      gamePlaying = false;
+    } else { 
+      // Next Player
+      nextPlayer();
+    }
   }
 });
 
@@ -93,13 +103,13 @@ function nextPlayer() {
 document.querySelector('.btn-new').addEventListener('click', init);
 
 // let's create init function to initialize variables from the beginning and reuse it 
-
 function init() {
   scores = [0,0]; // Which stores the scores for both the players
   roundScore = 0;
   activePlayer = 0; /* stores the active player, Player 1 = 0 & Player 2 = 1 
         we can use activePlayer to access, to read, or to write, in this case the scores
         right into the scores array. */
+  gamePlaying = true;
   /* 
     lets get id score-0 for player 1, use querySelector method to manipulate, to change values and elements
     and use textContent method for changing its value and it can only set plain text, so no HTML. 
@@ -132,8 +142,6 @@ function init() {
   document.querySelector('.player-1-panel').classList.remove('active');
   //add back active class to first player
   document.querySelector('.player-0-panel').classList.add('active');
-  document.querySelector('.btn-hold').style.display = 'block';
-  document.querySelector('.btn-roll').style.display = 'block';
 }
 
 
