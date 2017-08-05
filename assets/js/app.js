@@ -25,28 +25,38 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
   */
   if(gamePlaying) {
     // 1. Random Number
-    var dice = Math.floor(Math.random() *6) + 1;
+    var dice1 = Math.floor(Math.random() *6) + 1;
+    var dice2 = Math.floor(Math.random() *6) + 1;
     // 2. Display the  result
-    var diceDOM = document.querySelector('.dice');
-    diceDOM.style.display = 'block';
-
+    document.getElementById('dice-1').style.display = 'block';
+    document.getElementById('dice-2').style.display = 'block';
     //so let's change the img of dice rolls
-    diceDOM.src = 'assets/img/dice-' + dice + '.png';
+    document.getElementById('dice-1').src = 'assets/img/dice-' + dice1 + '.png';
+    document.getElementById('dice-2').src = 'assets/img/dice-' + dice2 + '.png';
 
     // 3. Update Round Score if the rolled number was NOT a 1
-    if(dice === 6 && lastDice === 6){
-      scores[activePlayer] = 0;
-      document.querySelector('#score-' + activePlayer).textContent = '0';
-      nextPlayer();
-    } else if (dice !== 1) {
+    if (dice1 !== 1 && dice2 !== 1) {
       //Add Score to current player which is player 0
-      roundScore += dice; //or roundScore = roundScore + dice
+      roundScore += dice1 + dice2; //or roundScore = roundScore + dice
       document.querySelector('#current-' + activePlayer).textContent = roundScore; 
     } else {
       // Next Player
       nextPlayer();
     }
-    lastDice =  dice;
+    /*if(dice1 === 6 && lastDice === 6){
+      scores[activePlayer] = 0;
+      document.querySelector('#score-' + activePlayer).textContent = '0';
+      nextPlayer();
+    } else if (dice1 !== 1) {
+      //Add Score to current player which is player 0
+      roundScore += dice1; //or roundScore = roundScore + dice
+      document.querySelector('#current-' + activePlayer).textContent = roundScore; 
+    } else {
+      // Next Player
+      nextPlayer();
+    }
+    lastDice =  dice1;
+    */
   }
 });
 
@@ -63,13 +73,13 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 
     // Undefined, 0, null, empty string " " are COERCED to false
     // Anything else is COERCED to true\
-    winningScore = input ? input : 100;
+    winningScore = (input ? input : 100);
     /*if(input) { winningScore = input; } else { winningScore = 100; } */
 
     // Check if player won the game
     if(scores[activePlayer] >= winningScore) {
       document.getElementById('name-' + activePlayer).textContent = 'Winner!';
-      document.querySelector('.dice').style.display = 'none';
+      hideDice();
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
       document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
       gamePlaying = false;
@@ -97,10 +107,7 @@ function nextPlayer() {
   document.querySelector('.player-0-panel').classList.toggle('active');
   document.querySelector('.player-1-panel').classList.toggle('active'); 
 
-  //document.querySelector('.player-0-panel').classList.remove('active');
-  //document.querySelector('.player-1-panel').classList.add('active'); 
-
-  document.querySelector('.dice').style.display = 'none';
+  hideDice();
 }
 
 document.querySelector('.btn-new').addEventListener('click', init);
@@ -130,7 +137,7 @@ function init() {
   //var x = document.querySelector('#score-0').textContent;
 
   //to change some CSS on a element.. style property : property value; > (display : none;)
-  document.querySelector('.dice').style.display = 'none';
+  hideDice();
 
   //so let's use getElementById for ID selector which is faster than querySelector so no more hashtag
   document.getElementById('score-0').textContent = '0';
@@ -148,6 +155,9 @@ function init() {
   document.querySelector('.player-0-panel').classList.add('active');
 }
 
-
+function hideDice() {
+  document.getElementById('dice-1').style.display = 'none';
+  document.getElementById('dice-2').style.display = 'none';
+}
 
 

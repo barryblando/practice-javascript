@@ -9,5 +9,5 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 - A player looses his ENTIRE score when he rolls two 6 in a  row. After that next player's turn.
 - Players can set the Winning Score.
-- The Player looses his current score when one of them is a 1. [To be Updated]
+- The Player looses his current score when one of the dice is 1. 
 
