@@ -103,6 +103,10 @@ first();
 
 //Scope Chain
 
+/* 
+  Lexical Scoping: a function that is lexically within another function
+  gets access to the scope of the outer function (Parent).
+*/
 var a = 'Hello';
 firstS();
 
@@ -111,10 +115,10 @@ function firstS() {
   var b = 'Hi';
   secondS();
 
-  //Scope Second
+  //Scope Second -- sits lexically
   function secondS() {
     var c = 'Hey';
-    thirdS();
+    thirdS(); // -- Lexing
   }
 }
 
@@ -181,9 +185,7 @@ john.calculateAge();
 
 /* 
   Method Borrowing
-
   We are going to borrow John's method to use it on Mike.
-
   This variable is only assigned a value when the object calls the method.
   if john object didn't use this on this.yearOfBirth then calculateAge method would be only for john Object
 */
@@ -198,5 +200,15 @@ var mike  = {
   so  we won't have the parenthesis 'cause these parenthesis are for calling a function
 */
 mike.calculateAge = john.calculateAge; 
-
 mike.calculateAge();
+
+//Lexical Scoping
+function add(x) {
+  return function (y) {
+    return x + y;
+  };
+}
+
+var add10 = add(10);
+//add10 -> function(y)
+console.log(add10(20)); // 30

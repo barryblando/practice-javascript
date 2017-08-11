@@ -2,7 +2,7 @@ var scores,
     roundScore, 
     activePlayer,
     lastDice,
-    gamePlaying; // lastly State variable simply tell us the condition of a system
+    gamePlaying; // lastly State Management variable to hold/tell the condition of the game/system
 
 init();
 
@@ -74,7 +74,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     // Undefined, 0, null, empty string " " are COERCED to false
     // Anything else is COERCED to true\
     winningScore = (input ? input : 100);
-    /*if(input) { winningScore = input; } else { winningScore = 100; } */
+    /*if(input) { winningScore = input; } else { winningScore = 100; } if no winning score unlimited score no one will win */
 
     // Check if player won the game
     if(scores[activePlayer] >= winningScore) {
