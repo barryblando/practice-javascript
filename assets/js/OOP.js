@@ -69,7 +69,7 @@ Person.prototype.lastName = 'Smith';
 
 //Instantiation 
 
-//these objects(john,jane,mark) here are intances of the person object
+//these objects(john,jane,mark) here are instances of the person object
 var john = new Person('John', 1990, 'teacher');
 
 john.calculateAge();
@@ -94,7 +94,7 @@ console.log(mark.lastName);
 
 /* 
   OBJECT.create builds an object that inherits directly from the one that we passed 
-  into the first argument and it allows us to implement a really complex inheritant 
+  into the first argument and it allows us to implement a really complex inheritance
   structure in an easier way than function Constructor 'cause it allows us to direct 
   specify which object should be a prototype. 
   While the function Constructor the newly created object inherits
@@ -103,7 +103,7 @@ console.log(mark.lastName);
 */
 
 //not capitalize 'cause it's not a function Constructor
-
+/*
 var personProto = {
   calculateAge: function() {
     console.log(2016 - this.yearOfBirth);
@@ -122,15 +122,129 @@ var jane = Object.create(personProto, {
   yearOfBirth: { value: 1969 },
   job: { value: 'Designer' }
 });
+*/
 
 // Primitives vs Objects
 
+//Primitives
+var a = 23;
+var b = a;
+a = 46;
+
+console.log(a);
+console.log(b);
+
+//Objects
+var obj1 = {
+  name: 'John',
+  age: 26
+};
+
+var obj2 = obj1;
+obj1.age = 30;
+
+console.log(obj1.age);
+console.log(obj2.age);
+
+//Functions
+var age = 27;
+var obj = {
+  name: 'Jonas',
+  city: 'lisbon'
+};
+
+function change(a, b) {
+  a = 30;
+  b.city = 'San Francisco';
+}
+
+change(age, obj);
+
+// This shows that when we pass a primitive into function a simple copy is created
+// you can change the variable a as many times it will never affect the variable on the outside
+// cause it's a primitive but when we pass the object into a function it's not really the object that we pass
+// but the reference that points to the object.
+console.log(age);
+console.log(obj.city);
 
 
+// Passing Functions as arguments
+
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(arr, fn) {
+  var arrRes = [];
+  for (var i = 0; i < arr.length; i++) {
+    //fn which is our function that is what callback is
+    arrRes.push(fn(arr[i]));
+  }
+  return arrRes;
+}
+
+// el = element
+function calculateAge(el) { 
+  return 2016 - el;
+}
+
+function isFullAge(el) {
+  return el >= 18;
+}
+
+function maxHeartRate(el) {
+  if (el >= 18 && el <= 81) {
+    //formula for getting the max heartRate base on age valid for people age 18 - 81
+    return Math.round(206.9 - (0.67 * el));
+  } else {
+    return -1;
+  }
+}
+
+// We use callback function so no parentheses, we want it to be called later by the arrayCalc
+var ages = arrayCalc(years, calculateAge);
+var fullAges = arrayCalc(ages, isFullAge);
+var rates = arrayCalc(ages, maxHeartRate);
+
+console.log(ages);
+console.log(fullAges);
+console.log(rates);
 
 
+//Functions returning functions - First Class
 
+// <reference https://www.quora.com/What-are-the-reasons-to-use-return-function-in-JavaScript
 
+function interviewQuestion(job) { 
+  if (job === 'designer') {
+    return function(name) {
+      console.log(name + ', can you please explain what UX design is?');
+    };
+  } else if (job === 'teacher') {
+    return function(name) {
+      console.log('What subject do you teach, ' + name + '?');
+    };
+  } else {
+    return function(name) {
+      console.log('Hello ' + name + ', what do you do?');
+    };
+  }
+}
 
+//so this will return anonymous fucntion came from interviewQuestion function
+var teacherQuestion = interviewQuestion('teacher');
+//so we can call the function that was returned
+teacherQuestion('John');
 
+//and we can Instantiate like this
+interviewQuestion('designer')('Mark');
 
+function makeGreeting() {
+	var d = new Date();
+	var timeGreeting = d.getHours() > 11 ? 'Good afternoon' : 'Good morning';
+	return function(userName) {
+		console.log(timeGreeting + ', ' + userName);
+	};
+}
+ 
+var greet = makeGreeting();
+ 
+greet('John'); 

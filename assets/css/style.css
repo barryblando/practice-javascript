@@ -16,10 +16,9 @@
 }
 
 body {
-    background-image: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(../img/back.jpg);
     background-size: cover;
-    background-position: center;
-    font-family: Lato;
+    background: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(../img/back.jpg) center;
+    font-family: Lato, sans-serif;
     font-weight: 300;
     position: relative;
     height: 100vh;
@@ -111,7 +110,7 @@ button {
     color: #555;
     background: none;
     border: none;
-    font-family: Lato;
+    font-family: Lato, sans-serif;
     font-size: 20px;
     text-transform: uppercase;
     cursor: pointer;
@@ -133,7 +132,7 @@ button:focus {
     bottom: 30px;
     color: #555;
     font-size: 18px;
-    font-family: 'Lato';
+    font-family: 'Lato', sans-serif;
     text-align: center;
     padding: 10px;
     width: 160px;

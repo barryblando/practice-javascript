@@ -9,7 +9,7 @@
   "author": "Barry Blando",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.18.12",
+    "browser-sync": "^2.18.13",
     "gulp": "^3.9.1",
     "jshint": "^2.9.5"
   }

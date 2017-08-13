@@ -1,5 +1,10 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "jshint.config": "D:/XAMPP/htdocs/practice-javascript/.jshintrc",
-  "eslint.enable": false
+  "eslint.enable": false,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  }
 }

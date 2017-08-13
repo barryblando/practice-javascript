@@ -199,6 +199,16 @@ for ( var i = 0; i < names.length; ++i) {
     console.log(names[i]);
 }
 
+/*var name = ['hello','world'];
+var nameChar = [];
+
+for(var i = 0; i < name.length; i++) {
+  nameChar = name[i];
+  for(var x = 0; x < nameChar.length; x++) {
+    console.log(nameChar[x]);
+  }
+}*/
+
 /* So array can hold also different data types */
 var john = ['John','Smith', 1990, 'teacher', false];
 console.log(john);
