@@ -170,7 +170,7 @@ yearRetirement('Mary', 1948);
 /* Difference is Expression produces value an outcome while declaration / statement just performs an action */
 
 /*
-    //function statement 
+    //function statement / declaration
     function someFun(par) {
         //code
     }
