@@ -32,6 +32,8 @@
 
 //When we create function Constructor it must be capital first
 
+//P.S In JavaScript, this. keyword just means the object our function belongs to.
+
 var Person = function(name, yearOfBirth, job) {
   // Prototype Start.. -->
   var $price, $title;
@@ -123,7 +125,7 @@ var jane = Object.create(personProto, {
   job: { value: 'Designer' }
 });
 */
-
+/*
 // Primitives vs Objects
 
 //Primitives
@@ -256,34 +258,39 @@ greet('John');
 //and also don't interfere with other variables
 //IIFE is just for data privacy
 
-/*(function () {
+(function () {
   var score = Math.random() * 10;
   console.log(score >= 5);
-})(); */
+})();
 
 (function (goodLuck) {
   var score = Math.random() * 10;
   console.log(score);
   console.log(score >= 5 - goodLuck);
-})(ages);
+})(ages);  */
 
 ////////////////////////////
 /*------- CLOSURES -------*/
-
+//<reference http://javascriptissexy.com/understand-javascript-closures-with-ease/
 /*
   An inner function has always access to the variables and parameters of its outer function
-  even after the outer function has returned and execution context is gone, the variable object
-  is still there, it still sits in memory and it can be accessed. scope chain always stays intact.
+  secret to closure is that even after the outer function has returned and execution context is gone, 
+  the variable object is still there, it still sits in memory and it can be accessed. scope chain always stays intact.
   and much cleaner code. DRY principle.
-  */
+*/
   
 function retirement(retirementAge) {
+  //<-- function then declares this a variable here
   var a = ' years left until retirement.';
-  
-  return function(yearOfBirth) {
+  /* and returns this function and the outer function finishes 
+    and its execution context gets popped off the stack, so
+    we stored the returned function in retirementUS variable
+    and can still access the retirementAge.
+  */ return function(yearOfBirth) {
     var age = 2016 - yearOfBirth;
     console.log((retirementAge - age) + a);
-  };
+  }; 
+  //-->
 }
 
 /*
@@ -314,3 +321,153 @@ function interviewQuestionClosure(job) {
 }
 
 interviewQuestionClosure('teacher')('John');
+
+// BIND, CALL and APPLY 
+//<reference https://stackoverflow.com/questions/15455009/javascript-call-apply-vs-bind
+//<reference http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/
+
+var bar = {
+  name: 'Barry',
+  age : 23,
+  job : 'webdeveloper',
+  presentation: function(style, timeOfDay) {
+    if (style === 'formal') {
+      console.log('Good ' + timeOfDay + ', Ladies and gentlemen! I\'m ' 
+      + this.name + ' I\m a ' + this.job + ' and I\'m ' + this.age + ' years old.');
+    } else if (style === 'friendly') {
+      console.log('Hey! What\'s up? I\'m ' 
+      + this.name + ' I\m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' 
+      + timeOfDay + '.');
+    } 
+  }
+};
+
+var emily = {
+  name: 'Emily',
+  age : 24,
+  job : 'webdesigner'
+};
+
+//bar.presentation('formal', 'morning');
+
+//Method borrowing using call, method from barry can be use here on the emily object
+//call method set the this(emily) variable here in the first argument
+//call attaches this into function and executes the function immediately
+// -- bar.presentation.call(emily, 'friendly', 'afternoon'); --
+
+//Using Apply method for borrowing but bar method doesn't expect receive an array, so this worn't work
+//apply is similar to call except that it takes an array-like object instead of listing the arguments out one at a time
+// -- bar.presentation.apply(emily, ['friendly', 'afternoon']); --
+
+//Using Bind Method for borrowing like call but needs store the method first in a new object
+//bind attaches this into function and it needs to be invoked separately
+/*
+  "Currying" a technique to create a function(a copy) based on another function but with some preset parameters
+  Function Currying, also known as partial function application, is the use of a function (that accept one or more arguments) 
+  that returns a new function with some of the arguments already set.
+*/
+var barFriendly =  bar.presentation.bind(bar, 'friendly');
+//presets
+barFriendly('morning');
+barFriendly('night');
+//presentation: function(<parameter1>, <parameter2>)
+//---------------------------------bind(object, <parameter1>) 
+//---------------------------------emilyFormal(<parameter2>)
+var emilyFormal = bar.presentation.bind(emily, 'formal');
+emilyFormal('afternoon');
+
+
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(arr, fn) {
+  var arrRes = [];
+  for (var i = 0; i < arr.length; i++) {
+    //this will be the second preset of isFullAge which is el
+    arrRes.push(fn(arr[i]));
+  }
+  return arrRes;
+}
+
+// el = element 
+function calculateAge(el) { 
+  return 2016 - el;
+}
+
+function isFullAge(limit, el) {
+  return el >= limit;
+}
+
+var ages = arrayCalc(years, calculateAge);
+//20 as the first preset value for limit in the isFullAge, the this is fullJapan object
+//a copy of isFullAge is pass to arrayCalc 'cause of bind
+var fullJapan  = arrayCalc(ages, isFullAge.bind(this, 20));
+var fullJapan2 = arrayCalc(ages, isFullAge.bind(this, 15));
+
+console.log(ages);
+console.log(fullJapan);
+console.log(fullJapan2);
+
+
+/*
+  ---BIND SAMPLE---
+*/
+
+//This data variable is a global variable
+var data = [
+  { name: 'Samantha', age:12 },
+  { name: 'Alexis', age:14 }
+];
+
+var user = {
+  //local data variable
+  data: [
+    { name: 'T. Woods', age:37 },
+    { name: 'P. Mickelson', age:43 }
+  ],
+  showData: function(event) {
+    //var randomNum = Math.floor(Math.random() * (Max - Min + Max)) + Min; or
+    var randomNum = ((Math.random() * 2 | 0) + 1) -1; //random number between 0 and 1
+    console.log(this.data[randomNum].name + ' ' + this.data[randomNum].age);
+  }
+};
+
+
+// Assign the showData method of the user object to a variable​ 
+//var showDataVar = user.showData;
+//showDataVar (); // Samantha 12 (from the global data array, not from the local data array)​
+/*
+This happens because showDataVar () is executed as a global function and use of this inside 
+showDataVar () is bound to the global scope, which is the window object in browsers. Throws Error
+*/
+
+// Bind the showData method to the user object
+var showDataVar = user.showData.bind(user);
+// Now we get the  value from the user object 
+// because the 'this' keyword is bound to the user object
+showDataVar();
+
+/*
+  ---APPLY SAMPLE---
+  Define an object with some properties and a method
+  pass the method as a callback function to another function​
+*/
+
+var clientData = {
+  id: 04545,
+  fullName: 'Not Set',
+  //setUsername is a method on the clientData object
+  setUserName: function(firstName, lastName) {
+    //this refers to the fullname property in this object
+    this.fullName =  firstName + ' ' + lastName;
+  }
+};
+
+function getUserInput(firstName, lastName, callback, callbackObj) {
+  //the use of the apply method below will set the 'this' value to callbackObj
+  callback.apply(callbackObj, [firstName, lastName]);
+}
+
+//the clientData object will be used by the Apply method to set the 'this' value
+getUserInput('Barack', 'Obama', clientData.setUserName, clientData);
+//the fullname property on the clientData was correctly set
+console.log(clientData.fullName);

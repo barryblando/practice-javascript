@@ -132,6 +132,9 @@ function thirdS() {
 // This Keyword
 
 /* 
+
+  https://dev.to/yaphi1/understanding-this-in-javascript
+
   Which this keyword points?
   Regular function call: the this keyword points at the global object 
   which, in case of the browser, is the window object.And this is actually the default.
@@ -142,6 +145,7 @@ function thirdS() {
   P.S The this keyword is not assigned a value until a function where it is defined is actually called.
   so it refers to the object where it is defined, the this varibale is technically only assigned a value
   as soon as an object calls a method. Which is only created as soon as the function is invoked / called.
+  
 */
 
 //Method call

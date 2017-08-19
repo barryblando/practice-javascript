@@ -302,11 +302,11 @@ jane['isMarried'] = true;
 
 console.log(jane);
 
-//we can also use functions in object. 
+//we can also use functions in object. A method is a function that belongs to an object.
 
 // V1.0
 
-// all of these key:value are properties of the mike object and calculateAge is the Method
+// all of these key:value are properties of the mike object and calculateAge is the Method 
 var mike = {
     name: 'Mike', //String
     lastname: 'Smith',
