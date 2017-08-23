@@ -23,7 +23,7 @@
   
   -When a certain method (or property) is called, the search starts in the object
   itself, and if it cannot be found, the search moves on to the object's prototype.
-  This continues until the method is found: prototype chain.
+  This continues until the method is found: object is the last one in a prototype chain.
 */
 
 //The standard way to create an object prototype is to use an object constructor function - Most Popular
