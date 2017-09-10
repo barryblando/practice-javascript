@@ -7,6 +7,8 @@ var scores,
 init();
 
 /*
+  </// <reference path="https://stackoverflow.com/questions/6589497/callback-function-use-of-parentheses" />
+  </// <reference path="https://developer.mozilla.org/en-US/docs/Glossary/Callback_function" />
   'cause this is only for user, we can't use callback function, Callback function means we let a function to call a function
   Example: 
     function btn() {

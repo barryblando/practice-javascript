@@ -30,9 +30,10 @@
 
 /*
 
-//When we create function Constructor it must be capital first
+//When we create function Constructor it must be capitalize first
 
-//P.S In JavaScript, this. keyword just means the object our function belongs to.
+//P.S In JavaScript, this. keyword just means the object our function belongs to. 
+</reference https://medium.com/dailyjs/javascript-basics-the-execution-context-and-the-lexical-environment-3505d4fe1be2
 
 var Person = function(name, yearOfBirth, job) {
   // Prototype Start.. -->
@@ -61,7 +62,7 @@ var Person = function(name, yearOfBirth, job) {
 
 //Inheritance
 //we can create prototype property/method using .prototype
-//we have acess it 'cause it's a prototype property of the function Constructor Person
+//we have acess 'cause it's a prototype property of the function Constructor Person
 
 Person.prototype.calculateAge = function() {
   console.log(2016 - this.yearOfBirth);
@@ -202,6 +203,8 @@ function maxHeartRate(el) {
 }
 
 // We use callback function so no parentheses, we want it to be called later by the arrayCalc
+// <reference http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
+
 var ages = arrayCalc(years, calculateAge);
 var fullAges = arrayCalc(ages, isFullAge);
 var rates = arrayCalc(ages, maxHeartRate);
@@ -450,6 +453,8 @@ showDataVar();
   ---APPLY SAMPLE---
   Define an object with some properties and a method
   pass the method as a callback function to another function​
+  -to receive an array, and it calls the function that the apply method is used 
+  on by using the elements of the array as the arguments
 */
 
 var clientData = {
