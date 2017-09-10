@@ -361,7 +361,7 @@ var emily = {
 //call attaches this into function and executes the function immediately
 // -- bar.presentation.call(emily, 'friendly', 'afternoon'); --
 
-//Using Apply method for borrowing 
+//Using Apply method for borrowing but presentation wants two normal arguments and doesn't expect to receive an array so it won't work
 //apply is similar to call except that it takes an array-like object instead of listing the arguments out one at a time
 // --  bar.presentation.apply(emily, ['friendly', 'Morning']); --
 
