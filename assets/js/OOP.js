@@ -353,14 +353,17 @@ var emily = {
 
 //bar.presentation('formal', 'morning');
 
+//first argument of the call, apply, bind method is always to set the this variable
+
 //Method borrowing using call, method from barry can be use here on the emily object
+
 //call method set the this(emily) variable here in the first argument
 //call attaches this into function and executes the function immediately
 // -- bar.presentation.call(emily, 'friendly', 'afternoon'); --
 
-//Using Apply method for borrowing but bar method doesn't expect receive an array, so this worn't work
+//Using Apply method for borrowing 
 //apply is similar to call except that it takes an array-like object instead of listing the arguments out one at a time
-// -- bar.presentation.apply(emily, ['friendly', 'afternoon']); --
+// --  bar.presentation.apply(emily, ['friendly', 'Morning']); --
 
 //Using Bind Method for borrowing like call but needs store the method first in a new object
 //bind attaches this into function and it needs to be invoked separately
@@ -369,7 +372,7 @@ var emily = {
   Function Currying, also known as partial function application, is the use of a function (that accept one or more arguments) 
   that returns a new function with some of the arguments already set.
 */
-var barFriendly =  bar.presentation.bind(bar, 'friendly');
+/* var barFriendly =  bar.presentation.bind(bar, 'friendly');
 //presets
 barFriendly('morning');
 barFriendly('night');
@@ -377,7 +380,7 @@ barFriendly('night');
 //---------------------------------bind(object, <parameter1>) 
 //---------------------------------emilyFormal(<parameter2>)
 var emilyFormal = bar.presentation.bind(emily, 'formal');
-emilyFormal('afternoon');
+emilyFormal('afternoon'); */
 
 
 var years = [1990, 1965, 1937, 2005, 1998];
