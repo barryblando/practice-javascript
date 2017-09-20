@@ -11,7 +11,7 @@
 // <reference http://javascriptissexy.com/javascript-prototype-in-plain-detailed-language/
 
 
-/* 
+/*
   -Every Javascript object has a Prototype property, which makes Inheritance
   possible in Javascript.
 
@@ -20,7 +20,7 @@
 
   -The Constructor's prototype property is NOT the prototype of the Constructor
   itself, it's the prototype of ALL instances that are created through it;
-  
+
   -When a certain method (or property) is called, the search starts in the object
   itself, and if it cannot be found, the search moves on to the object's prototype.
   This continues until the method is found: object is the last one in a prototype chain.
@@ -32,8 +32,9 @@
 
 //When we create function Constructor it must be capitalize first
 
-//P.S In JavaScript, this. keyword just means the object our function belongs to. 
+//P.S In JavaScript, this. keyword just means the object our function belongs to.
 </reference https://medium.com/dailyjs/javascript-basics-the-execution-context-and-the-lexical-environment-3505d4fe1be2
+</reference http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/
 
 var Person = function(name, yearOfBirth, job) {
   // Prototype Start.. -->
@@ -45,7 +46,7 @@ var Person = function(name, yearOfBirth, job) {
   this.setPrice = function(par) {
     this.price = par;
   };
-  
+
   this.getPrice = function() {
     console.log(this.price);
   };
@@ -70,7 +71,7 @@ Person.prototype.calculateAge = function() {
 
 Person.prototype.lastName = 'Smith';
 
-//Instantiation 
+//Instantiation
 
 //these objects(john,jane,mark) here are instances of the person object
 var john = new Person('John', 1990, 'teacher');
@@ -80,7 +81,7 @@ john.setPrice(50);
 john.getPrice();
 john.setTitle('Hello World');
 john.getTitle();
- 
+
 var jane = new Person('Jane', 1960, 'Designer');
 jane.calculateAge();
 
@@ -95,11 +96,11 @@ console.log(mark.lastName);
 
 // OBJECT.create - not really popular
 
-/* 
-  OBJECT.create builds an object that inherits directly from the one that we passed 
+/*
+  OBJECT.create builds an object that inherits directly from the one that we passed
   into the first argument and it allows us to implement a really complex inheritance
-  structure in an easier way than function Constructor 'cause it allows us to direct 
-  specify which object should be a prototype. 
+  structure in an easier way than function Constructor 'cause it allows us to direct
+  specify which object should be a prototype.
   While the function Constructor the newly created object inherits
   from the constructor's prototype property ( a property that is empty by default ).
 
@@ -185,7 +186,7 @@ function arrayCalc(arr, fn) {
 }
 
 // el = element
-function calculateAge(el) { 
+function calculateAge(el) {
   return 2016 - el;
 }
 
@@ -218,7 +219,7 @@ console.log(rates);
 
 // <reference https://www.quora.com/What-are-the-reasons-to-use-return-function-in-JavaScript
 
-function interviewQuestion(job) { 
+function interviewQuestion(job) {
   if (job === 'designer') {
     return function(name) {
       console.log(name + ', can you please explain what UX design is?');
@@ -249,10 +250,10 @@ function makeGreeting() {
 		console.log(timeGreeting + ', ' + userName);
 	};
 }
- 
+
 var greet = makeGreeting();
- 
-greet('John'); 
+
+greet('John');
 
 //Immediately Invoked Function Expressions (IIFE)
 //We can call IIFE once 'cause this function is not assigned to any variable
@@ -277,22 +278,22 @@ greet('John');
 //<reference http://javascriptissexy.com/understand-javascript-closures-with-ease/
 /*
   An inner function has always access to the variables and parameters of its outer function
-  secret to closure is that even after the outer function has returned and execution context is gone, 
+  secret to closure is that even after the outer function has returned and execution context is gone,
   the variable object is still there, it still sits in memory and it can be accessed. scope chain always stays intact.
   and much cleaner code. DRY principle.
 */
-  
+
 function retirement(retirementAge) {
   //<-- function then declares this a variable here
   var a = ' years left until retirement.';
-  /* and returns this function and the outer function finishes 
+  /* and returns this function and the outer function finishes
     and its execution context gets popped off the stack, so
     we stored the returned function in retirementUS variable
     and can still access the retirementAge.
   */ return function(yearOfBirth) {
     var age = 2016 - yearOfBirth;
     console.log((retirementAge - age) + a);
-  }; 
+  };
   //-->
 }
 
@@ -325,7 +326,7 @@ function interviewQuestionClosure(job) {
 
 interviewQuestionClosure('teacher')('John');
 
-// BIND, CALL and APPLY 
+// BIND, CALL and APPLY
 //<reference https://stackoverflow.com/questions/15455009/javascript-call-apply-vs-bind
 //<reference http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/
 
@@ -335,13 +336,13 @@ var bar = {
   job : 'webdeveloper',
   presentation: function(style, timeOfDay) {
     if (style === 'formal') {
-      console.log('Good ' + timeOfDay + ', Ladies and gentlemen! I\'m ' 
+      console.log('Good ' + timeOfDay + ', Ladies and gentlemen! I\'m '
       + this.name + ' I\m a ' + this.job + ' and I\'m ' + this.age + ' years old.');
     } else if (style === 'friendly') {
-      console.log('Hey! What\'s up? I\'m ' 
-      + this.name + ' I\m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' 
+      console.log('Hey! What\'s up? I\'m '
+      + this.name + ' I\m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice '
       + timeOfDay + '.');
-    } 
+    }
   }
 };
 
@@ -369,7 +370,7 @@ var emily = {
 //bind attaches this into function and it needs to be invoked separately
 /*
   "Currying" a technique to create a function(a copy) based on another function but with some preset parameters
-  Function Currying, also known as partial function application, is the use of a function (that accept one or more arguments) 
+  Function Currying, also known as partial function application, is the use of a function (that accept one or more arguments)
   that returns a new function with some of the arguments already set.
 */
 /* var barFriendly =  bar.presentation.bind(bar, 'friendly');
@@ -377,7 +378,7 @@ var emily = {
 barFriendly('morning');
 barFriendly('night');
 //presentation: function(<parameter1>, <parameter2>)
-//---------------------------------bind(object, <parameter1>) 
+//---------------------------------bind(object, <parameter1>)
 //---------------------------------emilyFormal(<parameter2>)
 var emilyFormal = bar.presentation.bind(emily, 'formal');
 emilyFormal('afternoon'); */
@@ -394,8 +395,8 @@ function arrayCalc(arr, fn) {
   return arrRes;
 }
 
-// el = element 
-function calculateAge(el) { 
+// el = element
+function calculateAge(el) {
   return 2016 - el;
 }
 
@@ -438,17 +439,17 @@ var user = {
 };
 
 
-// Assign the showData method of the user object to a variable​ 
+// Assign the showData method of the user object to a variable​
 //var showDataVar = user.showData;
 //showDataVar (); // Samantha 12 (from the global data array, not from the local data array)​
 /*
-This happens because showDataVar () is executed as a global function and use of this inside 
+This happens because showDataVar () is executed as a global function and use of this inside
 showDataVar () is bound to the global scope, which is the window object in browsers. Throws Error
 */
 
 // Bind the showData method to the user object
 var showDataVar = user.showData.bind(user);
-// Now we get the  value from the user object 
+// Now we get the  value from the user object
 // because the 'this' keyword is bound to the user object
 showDataVar();
 
@@ -456,7 +457,7 @@ showDataVar();
   ---APPLY SAMPLE---
   Define an object with some properties and a method
   pass the method as a callback function to another function​
-  -to receive an array, and it calls the function that the apply method is used 
+  -to receive an array, and it calls the function that the apply method is used
   on by using the elements of the array as the arguments
 */
 
